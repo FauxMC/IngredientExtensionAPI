@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "ingredient-extension-api",
+  "version": "${version}",
+  "name": "Ingredient Extension API",
+  "description": "An API and framework for extending the ingredient system!",
+  "authors": [
+    "Darkhax",
+    "Jaredlll08"
+  ],
+  "contact": {
+    "homepage": "https://github.com/JarHax/",
+    "sources": "https://github.com/JarHax/IngredientExtensionAPI"
+  },
+  "license": "TODO",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.jarhax.fia.FIA"
+    ]
+  },
+  "mixins": [
+    "fia.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  }
+}
