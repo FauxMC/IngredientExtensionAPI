@@ -1,0 +1,6 @@
+accessWidener v1 named
+
+extendable class net/minecraft/world/item/crafting/Ingredient
+accessible method net/minecraft/world/item/crafting/Ingredient <init> (Ljava/util/stream/Stream;)V
+
+extendable class net/minecraft/world/item/crafting/Ingredient$Value

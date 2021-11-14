@@ -22,6 +22,7 @@
   "mixins": [
     "fia.mixins.json"
   ],
+  "accessWidener": "ingredient-extension-api.accesswidener",
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
