@@ -2,6 +2,7 @@ package com.jarhax.ingredientextension.api.ingredient.serializer;
 
 import com.google.gson.JsonObject;
 import com.jarhax.ingredientextension.Constants;
+import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
 import com.mojang.serialization.Lifecycle;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.core.MappedRegistry;
