@@ -68,9 +68,10 @@ public interface IIngredientSerializer<T extends Ingredient> {
 
     /**
      * Registers a new ingredient serializer with the registry.
-     * @param id The ID of the value being registered.
+     *
+     * @param id         The ID of the value being registered.
      * @param serializer The serializer being registered.
-     * @param <T> The type of the serializer being registered.
+     * @param <T>        The type of the serializer being registered.
      * @return The serializer being registered.
      */
     public static <T extends IIngredientSerializer<?>> T register(ResourceLocation id, T serializer) {

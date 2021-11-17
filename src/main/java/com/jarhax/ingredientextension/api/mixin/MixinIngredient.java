@@ -2,9 +2,7 @@ package com.jarhax.ingredientextension.api.mixin;
 
 import com.jarhax.ingredientextension.Constants;
 import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
-import com.jarhax.ingredientextension.api.ingredient.serializer.IngredientExtendable;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,15 +12,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Ingredient.class)
 public class MixinIngredient {
-    
+
     @Inject(method = "toNetwork", at = @At("HEAD"))
     private void toNetwork(FriendlyByteBuf friendlyByteBuf, CallbackInfo ci) {
 
-        final Ingredient self = (Ingredient)(Object)this;
+        final Ingredient self = (Ingredient) (Object) this;
         friendlyByteBuf.writeInt(Constants.NETWORK_MARKER);
         IIngredientSerializer.writeIngredient(friendlyByteBuf, self);
     }
-    
+
     @Inject(method = "fromNetwork", at = @At("HEAD"))
     private static void fromNetwork(FriendlyByteBuf friendlyByteBuf, CallbackInfoReturnable<Ingredient> cir) {
 
