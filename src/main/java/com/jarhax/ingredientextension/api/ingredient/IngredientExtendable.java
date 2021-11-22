@@ -12,5 +12,10 @@ public abstract class IngredientExtendable extends Ingredient {
         super(stream);
     }
 
+    protected IngredientExtendable() {
+
+        super(Stream.empty());
+    }
+
     public abstract IIngredientSerializer<? extends Ingredient> getSerializer();
 }
