@@ -3,7 +3,9 @@ package com.jarhax.ingredientextension.api.ingredient.serializer;
 import com.google.gson.JsonObject;
 import com.jarhax.ingredientextension.Constants;
 import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
+import com.mojang.datafixers.kinds.Const;
 import com.mojang.serialization.Lifecycle;
+import io.netty.handler.codec.UnsupportedMessageTypeException;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
@@ -12,6 +14,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.IOException;
 
 public interface IIngredientSerializer<T extends Ingredient> {
 
@@ -23,7 +28,7 @@ public interface IIngredientSerializer<T extends Ingredient> {
 
     void write(FriendlyByteBuf bytebuf, T ingredient);
 
-    // TODO Nullable
+    @Nullable
     public static ResourceLocation getSerializerId(Ingredient ingredient) {
 
         if (ingredient instanceof IngredientExtendable extended) {
@@ -31,26 +36,11 @@ public interface IIngredientSerializer<T extends Ingredient> {
             return INGREDIENT_SERIALIZER_REGISTRY.getKey(extended.getSerializer());
         }
 
-        return Constants.VANILLA_INGREDIENT_TYPE;
+        return null;
     }
 
     public static <T extends Ingredient> void writeIngredient(FriendlyByteBuf buf, T ingredient) {
 
-        IIngredientSerializer<T> serializer = null;
-        ResourceLocation id = Constants.VANILLA_INGREDIENT_TYPE;
-
-        if (ingredient instanceof IngredientExtendable extended) {
-
-            serializer = (IIngredientSerializer<T>) extended.getSerializer();
-            id = INGREDIENT_SERIALIZER_REGISTRY.getKey(serializer);
-        }
-
-        buf.writeUtf(id.toString());
-
-        if (serializer != null) {
-
-            serializer.write(buf, ingredient);
-        }
     }
 
     public static Ingredient readIngredient(FriendlyByteBuf buf) {
@@ -63,8 +53,9 @@ public interface IIngredientSerializer<T extends Ingredient> {
             return serializer.parse(buf);
         }
 
-        // TODO throw exception?
-        return null;
+        final String errorMessage = "No ingredient serializer found with ID '" + typeId + "'!";
+        Constants.LOGGER.error(errorMessage);
+        throw new RuntimeException(errorMessage);
     }
 
     /**

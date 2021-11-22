@@ -1,8 +1,11 @@
 package com.jarhax.ingredientextension.api.mixin;
 
 import com.jarhax.ingredientextension.Constants;
+import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
 import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
+import com.mojang.datafixers.kinds.Const;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,27 +16,49 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Ingredient.class)
 public class MixinIngredient {
 
-    @Inject(method = "toNetwork", at = @At("HEAD"))
-    private void toNetwork(FriendlyByteBuf friendlyByteBuf, CallbackInfo ci) {
+    @Inject(method = "toNetwork", at = @At("HEAD"), cancellable = true)
+    private void toNetwork(FriendlyByteBuf buf, CallbackInfo ci) {
 
         final Ingredient self = (Ingredient) (Object) this;
-        friendlyByteBuf.writeInt(Constants.NETWORK_MARKER);
-        IIngredientSerializer.writeIngredient(friendlyByteBuf, self);
+
+        // Extended Ingredient
+        if (self instanceof IngredientExtendable extended) {
+
+            final IIngredientSerializer<?> serializer = extended.getSerializer();
+            final ResourceLocation serializerId = IIngredientSerializer.INGREDIENT_SERIALIZER_REGISTRY.getKey(serializer);
+
+            self.dissolve();
+            // TODO invoke dissolve
+            buf.writeInt(Constants.NETWORK_MARKER_EXTENDED);
+            buf.writeUtf(serializerId.toString());
+            ((IIngredientSerializer)serializer).write(buf, self);
+            ci.cancel();
+        }
+
+        // Externally Managed Ingredient
+        else {
+
+            buf.writeInt(Constants.NETWORK_MARKER_VANILLA);
+        }
     }
 
-    @Inject(method = "fromNetwork", at = @At("HEAD"))
+    @Inject(method = "fromNetwork", at = @At("HEAD"), cancellable = true)
     private static void fromNetwork(FriendlyByteBuf friendlyByteBuf, CallbackInfoReturnable<Ingredient> cir) {
 
         final int marker = friendlyByteBuf.readInt();
 
-        if (marker == Constants.NETWORK_MARKER) {
+        // Handle extended ingredients
+        if (marker == Constants.NETWORK_MARKER_EXTENDED) {
 
             cir.setReturnValue(IIngredientSerializer.readIngredient(friendlyByteBuf));
         }
 
-        else {
+        // Handle non-vanilla ingredients
+        else if (marker != Constants.NETWORK_MARKER_VANILLA) {
 
-            // TODO error
+            final String message = "Failed to deserialize ingredient! Expected a marker with value '" + Constants.NETWORK_MARKER_EXTENDED + "' or '" + Constants.NETWORK_MARKER_VANILLA + "'. Got '" + marker + "' instead.";
+            Constants.LOGGER.error(message);
+            throw new RuntimeException(message);
         }
     }
 }
