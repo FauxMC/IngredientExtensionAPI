@@ -8,6 +8,10 @@ public class Constants {
 
     public static final String MODID = "ingredient-extension-api";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static final int NETWORK_MARKER = MODID.hashCode();
-    public static final ResourceLocation VANILLA_INGREDIENT_TYPE = new ResourceLocation(MODID, "vanilla");
+
+    public static final ResourceLocation INGREDIENT_TYPE_EXTENDED = new ResourceLocation(MODID, "extended");
+    public static final int NETWORK_MARKER_EXTENDED = INGREDIENT_TYPE_EXTENDED.toString().hashCode();
+
+    public static final ResourceLocation INGREDIENT_TYPE_VANILLA = new ResourceLocation(MODID, "vanilla");
+    public static final int NETWORK_MARKER_VANILLA = INGREDIENT_TYPE_VANILLA.toString().hashCode();
 }
