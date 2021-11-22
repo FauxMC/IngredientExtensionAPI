@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "coins",
+  "ingredients": [
+    {
+      "type": "ingredient-extension-api:enchanted",
+      "enchantment": "minecraft:sharpness"
+    },
+    {
+      "item": "minecraft:dirt"
+    }
+  ],
+  "result": {
+    "item": "minecraft:diamond",
+    "count": 9
+  }
+}

@@ -15,6 +15,7 @@
   "license": "TODO",
   "environment": "*",
   "entrypoints": {
+    "main": ["com.jarhax.ingredientextension.EntryPoint"]
   },
   "mixins": [
     "ingredient-extension-api.mixins.json"
