@@ -6,7 +6,7 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
 
-archivesBaseName = "${mod_name}-faric-${minecraft_version}"
+archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
 
 repositories {
 }
@@ -44,4 +44,24 @@ tasks.withType(JavaCompile).configureEach {
 java {
 	withSourcesJar()
     withJavadocJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId project.maven_group
+            artifactId project.archivesBaseName
+            version project.mod_version
+
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+        }
+    }
+
+    repositories {
+    }
 }

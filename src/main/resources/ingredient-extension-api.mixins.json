@@ -1,12 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.jarhax.ieapi.mixin",
+  "package": "com.jarhax.ingredientextension.api.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-  ],
-  "client": [
-    "com.jarhax.ingredientextension.api.mixin.ExampleMixin"
+    "MixinIngredient"
   ],
   "injectors": {
     "defaultRequire": 1

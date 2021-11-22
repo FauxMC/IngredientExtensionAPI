@@ -15,12 +15,9 @@
   "license": "TODO",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "com.jarhax.fia.FIA"
-    ]
   },
   "mixins": [
-    "fia.mixins.json"
+    "ingredient-extension-api.mixins.json"
   ],
   "accessWidener": "ingredient-extension-api.accesswidener",
   "depends": {
