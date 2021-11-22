@@ -3,9 +3,7 @@ package com.jarhax.ingredientextension.api.ingredient.serializer;
 import com.google.gson.JsonObject;
 import com.jarhax.ingredientextension.Constants;
 import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
-import com.mojang.datafixers.kinds.Const;
 import com.mojang.serialization.Lifecycle;
-import io.netty.handler.codec.UnsupportedMessageTypeException;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
@@ -16,17 +14,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
-
 public interface IIngredientSerializer<T extends Ingredient> {
 
     public static final Registry<IIngredientSerializer<?>> INGREDIENT_SERIALIZER_REGISTRY = createRegistry(new ResourceLocation(Constants.MODID, "ingredient_serializers"));
 
-    T parse(FriendlyByteBuf bytebuf);
+    T fromNetwork(FriendlyByteBuf bytebuf);
 
-    T parse(JsonObject json);
+    T fromJson(JsonObject json);
 
-    void write(FriendlyByteBuf bytebuf, T ingredient);
+    void toNetwork(FriendlyByteBuf bytebuf, T ingredient);
 
     @Nullable
     public static ResourceLocation getSerializerId(Ingredient ingredient) {
@@ -39,10 +35,6 @@ public interface IIngredientSerializer<T extends Ingredient> {
         return null;
     }
 
-    public static <T extends Ingredient> void writeIngredient(FriendlyByteBuf buf, T ingredient) {
-
-    }
-
     public static Ingredient readIngredient(FriendlyByteBuf buf) {
 
         final ResourceLocation typeId = ResourceLocation.tryParse(buf.readUtf());
@@ -50,7 +42,7 @@ public interface IIngredientSerializer<T extends Ingredient> {
 
         if (serializer != null) {
 
-            return serializer.parse(buf);
+            return serializer.fromNetwork(buf);
         }
 
         final String errorMessage = "No ingredient serializer found with ID '" + typeId + "'!";
