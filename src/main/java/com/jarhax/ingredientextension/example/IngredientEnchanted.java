@@ -42,7 +42,12 @@ public final class IngredientEnchanted extends IngredientExtendable {
 
         return false;
     }
-
+    
+    @Override
+    public boolean isSimple() {
+        return false;
+    }
+    
     static final class Serializer implements IIngredientSerializer<IngredientEnchanted> {
 
         @Override

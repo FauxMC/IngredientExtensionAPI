@@ -4,7 +4,8 @@
   "package": "com.jarhax.ingredientextension.api.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "MixinIngredient"
+    "MixinIngredient",
+    "MixinShapelessRecipe"
   ],
   "injectors": {
     "defaultRequire": 1

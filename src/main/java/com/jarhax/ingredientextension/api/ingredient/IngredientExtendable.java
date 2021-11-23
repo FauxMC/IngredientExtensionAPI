@@ -1,6 +1,7 @@
 package com.jarhax.ingredientextension.api.ingredient;
 
 import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
+import com.jarhax.ingredientextension.api.recipe.ISimpleton;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.stream.Stream;
@@ -18,4 +19,8 @@ public abstract class IngredientExtendable extends Ingredient {
     }
 
     public abstract IIngredientSerializer<? extends Ingredient> getSerializer();
+    
+    public boolean isSimple() {
+        return this == Ingredient.EMPTY;
+    }
 }
