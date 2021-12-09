@@ -1,11 +1,15 @@
 package com.jarhax.ingredientextension.api.recipe;
 
+import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 
 import java.util.List;
 
 public class ShapelessMatchingHelper {
+    
+
     
     public static boolean tryMatch(List<Ingredient> ingredients, List<ItemStack> containerItems) {
         

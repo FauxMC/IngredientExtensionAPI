@@ -75,7 +75,6 @@ public class MixinIngredient {
             if(serializer != null) {
                 
                 final Ingredient out = serializer.fromJson(jsonObj);
-                System.out.println(out);
                 callback.setReturnValue(out);
             } else if(!jsonObj.has("ignoreIngredientExtensionAPI")) {
                 

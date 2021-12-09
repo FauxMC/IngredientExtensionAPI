@@ -19,7 +19,7 @@ public abstract class IngredientExtendable extends Ingredient {
 
     public abstract IIngredientSerializer<? extends Ingredient> getSerializer();
     
-    public boolean isSimple() {
-        return this == Ingredient.EMPTY;
+    public boolean requiresTesting() {
+        return this != Ingredient.EMPTY;
     }
 }
