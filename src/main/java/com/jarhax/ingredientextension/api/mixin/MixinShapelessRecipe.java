@@ -1,6 +1,6 @@
 package com.jarhax.ingredientextension.api.mixin;
 
-import com.jarhax.ingredientextension.api.recipe.ISimpleton;
+import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
 import com.jarhax.ingredientextension.api.recipe.ShapelessMatchingHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.StackedContents;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ShapelessRecipe.class)
-public abstract class MixinShapelessRecipe implements ISimpleton {
+public abstract class MixinShapelessRecipe {
     
     @Shadow
     public abstract NonNullList<Ingredient> getIngredients();
@@ -37,7 +37,7 @@ public abstract class MixinShapelessRecipe implements ISimpleton {
             if(itemStack.isEmpty())
                 continue;
             ++itemCount;
-            if(ingredientextensionapi$isSimple()) {
+            if(isSimple()) {
                 stackedContents.accountStack(itemStack, 1);
             } else {
                 containerItems.add(itemStack);
@@ -48,7 +48,7 @@ public abstract class MixinShapelessRecipe implements ISimpleton {
             return false;
         }
         
-        if(ingredientextensionapi$isSimple()) {
+        if(isSimple()) {
             return stackedContents.canCraft((ShapelessRecipe) (Object) this, null);
         } else {
             return ShapelessMatchingHelper.tryMatch(this.getIngredients(), containerItems);
@@ -56,9 +56,12 @@ public abstract class MixinShapelessRecipe implements ISimpleton {
         
     }
     
-    
-    @Override
-    public boolean ingredientextensionapi$isSimple() {
-        return this.getIngredients().stream().map(ingredient -> ((ISimpleton) ingredient)).allMatch(ISimpleton::ingredientextensionapi$isSimple);
+    public boolean isSimple() {
+        for(Ingredient ingredient : this.getIngredients()) {
+            if(ingredient instanceof IngredientExtendable extendable && !extendable.isSimple()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

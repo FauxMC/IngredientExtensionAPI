@@ -1,7 +1,6 @@
 package com.jarhax.ingredientextension.api.ingredient;
 
 import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
-import com.jarhax.ingredientextension.api.recipe.ISimpleton;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.stream.Stream;
