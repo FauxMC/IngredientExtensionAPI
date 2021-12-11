@@ -23,7 +23,7 @@ public interface IIngredientSerializer<T extends Ingredient> {
 
     T fromJson(JsonObject json);
     
-    JsonElement toJson(T ingredient);
+    JsonElement toJson(JsonObject json, T ingredient);
 
     void toNetwork(FriendlyByteBuf bytebuf, T ingredient);
 

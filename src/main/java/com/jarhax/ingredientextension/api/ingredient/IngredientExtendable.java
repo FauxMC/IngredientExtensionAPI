@@ -22,9 +22,10 @@ public abstract class IngredientExtendable extends Ingredient {
     @Override
     public final JsonElement toJson() {
         
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("type", IIngredientSerializer.INGREDIENT_SERIALIZER_REGISTRY.getKey(getSerializer()).toString());
-        return super.toJson();
+        JsonObject json = new JsonObject();
+        json.addProperty("type", IIngredientSerializer.INGREDIENT_SERIALIZER_REGISTRY.getKey(getSerializer()).toString());
+        ((IIngredientSerializer) getSerializer()).toJson(json, this);
+        return json;
     }
     
     public abstract IIngredientSerializer<? extends Ingredient> getSerializer();
