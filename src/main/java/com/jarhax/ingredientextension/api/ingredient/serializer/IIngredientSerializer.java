@@ -1,5 +1,6 @@
 package com.jarhax.ingredientextension.api.ingredient.serializer;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jarhax.ingredientextension.Constants;
 import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
@@ -21,6 +22,8 @@ public interface IIngredientSerializer<T extends Ingredient> {
     T fromNetwork(FriendlyByteBuf bytebuf);
 
     T fromJson(JsonObject json);
+    
+    JsonElement toJson(T ingredient);
 
     void toNetwork(FriendlyByteBuf bytebuf, T ingredient);
 
