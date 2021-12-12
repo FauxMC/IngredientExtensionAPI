@@ -1,4 +1,4 @@
-package com.jarhax.ingredientextension.api.mixin;
+package com.jarhax.ingredientextension.mixin;
 
 import com.jarhax.ingredientextension.api.ingredient.IngredientHelper;
 import net.minecraft.core.NonNullList;

@@ -1,4 +1,4 @@
-package com.jarhax.ingredientextension.api.mixin;
+package com.jarhax.ingredientextension.mixin;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

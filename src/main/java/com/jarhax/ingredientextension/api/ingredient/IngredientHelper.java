@@ -2,7 +2,7 @@ package com.jarhax.ingredientextension.api.ingredient;
 
 import com.jarhax.ingredientextension.Constants;
 import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
-import com.jarhax.ingredientextension.api.recipe.BipGraph;
+import com.jarhax.ingredientextension.util.BipGraph;
 import com.mojang.serialization.Lifecycle;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.core.MappedRegistry;
