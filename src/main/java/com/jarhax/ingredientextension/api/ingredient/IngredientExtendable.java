@@ -14,11 +14,6 @@ public abstract class IngredientExtendable extends Ingredient {
         super(stream);
     }
     
-    protected IngredientExtendable() {
-        
-        super(Stream.empty());
-    }
-    
     @Override
     public final JsonElement toJson() {
         
