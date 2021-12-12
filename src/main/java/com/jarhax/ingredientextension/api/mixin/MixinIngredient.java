@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jarhax.ingredientextension.Constants;
 import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
+import com.jarhax.ingredientextension.api.ingredient.IngredientHelper;
 import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -26,10 +27,9 @@ public class MixinIngredient {
         if(self instanceof IngredientExtendable extended) {
             
             final IIngredientSerializer<?> serializer = extended.getSerializer();
-            final ResourceLocation serializerId = IIngredientSerializer.INGREDIENT_SERIALIZER_REGISTRY.getKey(serializer);
+            final ResourceLocation serializerId = IngredientHelper.INGREDIENT_SERIALIZER_REGISTRY.getKey(serializer);
             
             self.dissolve();
-            // TODO invoke dissolve
             buf.writeInt(Constants.NETWORK_MARKER_EXTENDED);
             buf.writeUtf(serializerId.toString());
             ((IIngredientSerializer) serializer).toNetwork(buf, self);
@@ -50,8 +50,21 @@ public class MixinIngredient {
         
         // Handle extended ingredients
         if(marker == Constants.NETWORK_MARKER_EXTENDED) {
-            
-            cir.setReturnValue(IIngredientSerializer.readIngredient(friendlyByteBuf));
+
+            final ResourceLocation typeId = ResourceLocation.tryParse(friendlyByteBuf.readUtf());
+            final IIngredientSerializer<?> serializer = IngredientHelper.getSerializer(typeId);
+
+            if (serializer != null) {
+
+                cir.setReturnValue(serializer.fromNetwork(friendlyByteBuf));
+            }
+
+            else {
+
+                final String errorMessage = "No ingredient serializer found with ID '" + typeId + "'!";
+                Constants.LOGGER.error(errorMessage);
+                throw new RuntimeException(errorMessage);
+            }
         }
         
         // Handle non-vanilla ingredients
@@ -69,7 +82,7 @@ public class MixinIngredient {
         if(jsonElement instanceof JsonObject jsonObj && jsonObj.has("type")) {
             
             final ResourceLocation typeId = new ResourceLocation(jsonObj.get("type").getAsString());
-            final IIngredientSerializer<?> serializer = IIngredientSerializer.getSerializer(typeId);
+            final IIngredientSerializer<?> serializer = IngredientHelper.getSerializer(typeId);
             
             Constants.LOGGER.info(serializer);
             if(serializer != null) {
@@ -82,5 +95,4 @@ public class MixinIngredient {
             }
         }
     }
-    
 }

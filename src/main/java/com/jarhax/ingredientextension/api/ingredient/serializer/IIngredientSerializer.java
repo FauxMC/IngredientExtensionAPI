@@ -1,88 +1,55 @@
 package com.jarhax.ingredientextension.api.ingredient.serializer;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.jarhax.ingredientextension.Constants;
-import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
-import com.mojang.serialization.Lifecycle;
-import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
-import net.minecraft.core.MappedRegistry;
-import net.minecraft.core.Registry;
-import net.minecraft.core.WritableRegistry;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
-import org.jetbrains.annotations.Nullable;
 
+/**
+ * Ingredient serializers allow for custom logic to be used when an ingredient is serialized from JSON or the network
+ * buffer. In addition to standard vanilla ingredients an Ingredient serializer can also produce custom Ingredient
+ * implementations.
+ *
+ * @param <T> The type of ingredient managed by this serializer.
+ */
 public interface IIngredientSerializer<T extends Ingredient> {
 
-    public static final Registry<IIngredientSerializer<?>> INGREDIENT_SERIALIZER_REGISTRY = createRegistry(new ResourceLocation(Constants.MODID, "ingredient_serializers"));
+    /**
+     * Appends additional properties managed by the serializer to the JSON data. The appended data should be readable by
+     * {@link #fromJson(JsonObject)}.
+     * <p>
+     * The JSON object will already contain a type property that has been populated with the ID of this serializer. This
+     * property is required to match the JSON back up to your serializer during the deserialization process. This work
+     * is done for you already and does not need to be duplicated here.
+     *
+     * @param json       The JSON object to append additional properties to.
+     * @param ingredient The ingredient instance to write.
+     */
+    void toJson(JsonObject json, T ingredient);
 
-    T fromNetwork(FriendlyByteBuf bytebuf);
-
+    /**
+     * Produces an ingredient instance by parsing the provided JSON data.
+     *
+     * @param json The JSON data to parse.
+     * @return An ingredient that was read from the JSON data.
+     */
     T fromJson(JsonObject json);
-    
-    JsonElement toJson(JsonObject json, T ingredient);
 
+    /**
+     * Writes additional properties managed by the serializer to a network buffer. All data written to the buffer must
+     * be read from the buffer in the same order it was written.
+     *
+     * @param bytebuf    The buffer to write additional properties to.
+     * @param ingredient The ingredient to write.
+     */
     void toNetwork(FriendlyByteBuf bytebuf, T ingredient);
 
-    @Nullable
-    public static ResourceLocation getSerializerId(Ingredient ingredient) {
-
-        if (ingredient instanceof IngredientExtendable extended) {
-
-            return INGREDIENT_SERIALIZER_REGISTRY.getKey(extended.getSerializer());
-        }
-
-        return null;
-    }
-
-    public static Ingredient readIngredient(FriendlyByteBuf buf) {
-
-        final ResourceLocation typeId = ResourceLocation.tryParse(buf.readUtf());
-        final IIngredientSerializer<?> serializer = getSerializer(typeId);
-
-        if (serializer != null) {
-
-            return serializer.fromNetwork(buf);
-        }
-
-        final String errorMessage = "No ingredient serializer found with ID '" + typeId + "'!";
-        Constants.LOGGER.error(errorMessage);
-        throw new RuntimeException(errorMessage);
-    }
-
     /**
-     * Registers a new ingredient serializer with the registry.
+     * Produces an ingredient by reading properties from a network buffer. It is critical that all data written to the
+     * buffer in {@link #toNetwork(FriendlyByteBuf, Ingredient)} is read here, and that it is read in the same order it
+     * was written.
      *
-     * @param id         The ID of the value being registered.
-     * @param serializer The serializer being registered.
-     * @param <T>        The type of the serializer being registered.
-     * @return The serializer being registered.
+     * @param bytebuf The buffer to read properties from.
+     * @return The ingredient that was read.
      */
-    public static <T extends IIngredientSerializer<?>> T register(ResourceLocation id, T serializer) {
-
-        Registry.register(INGREDIENT_SERIALIZER_REGISTRY, id, serializer);
-        return serializer;
-    }
-
-    public static IIngredientSerializer<?> getSerializer(ResourceLocation id) {
-
-        return INGREDIENT_SERIALIZER_REGISTRY.get(id);
-    }
-
-    /**
-     * Creates a new modded registry and registers it with the game. While this method is not strictly needed it allows
-     * us to handle generics a bit cleaner.
-     *
-     * @param id  The ID of the registry to create and register.
-     * @param <T> The type of value held by the registry. This can just be inferred.
-     * @return A registry for the given type.
-     */
-    private static <T> Registry<T> createRegistry(ResourceLocation id) {
-
-        final WritableRegistry<T> registry = new MappedRegistry<>(ResourceKey.createRegistryKey(id), Lifecycle.stable());
-        return FabricRegistryBuilder.from(registry).buildAndRegister();
-    }
+    T fromNetwork(FriendlyByteBuf bytebuf);
 }

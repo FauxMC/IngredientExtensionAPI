@@ -67,9 +67,8 @@ public final class IngredientEnchanted extends IngredientExtendable {
         }
         
         @Override
-        public JsonElement toJson(JsonObject json, IngredientEnchanted ingredient) {
+        public void toJson(JsonObject json, IngredientEnchanted ingredient) {
             json.addProperty("enchantment", Registry.ENCHANTMENT.getKey(ingredient.enchantment).toString());
-            return json;
         }
         
         @Override
