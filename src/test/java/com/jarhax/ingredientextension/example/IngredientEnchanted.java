@@ -1,6 +1,5 @@
 package com.jarhax.ingredientextension.example;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
 import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
@@ -12,6 +11,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 public final class IngredientEnchanted extends IngredientExtendable {
     
     public static final IIngredientSerializer<IngredientEnchanted> SERIALIZER = new Serializer();
@@ -20,9 +23,24 @@ public final class IngredientEnchanted extends IngredientExtendable {
     private final Enchantment enchantment;
     
     public IngredientEnchanted(boolean strictMatch, Enchantment enchantment) {
-        
+        super(getValues(enchantment));
         this.strictMatch = strictMatch;
         this.enchantment = enchantment;
+    }
+    
+    private static Stream<? extends Value> getValues(Enchantment enchantment) {
+        
+        List<ItemValue> values = new ArrayList<>();
+        List<ItemStack> validItems = Registry.ITEM.stream().map(ItemStack::new).filter(enchantment::canEnchant).toList();
+        for(int i = enchantment.getMinLevel(); i < enchantment.getMaxLevel(); i++) {
+            int level = i;
+            validItems.stream().map(ItemStack::copy).forEach(itemStack -> {
+                itemStack.enchant(enchantment, level);
+                values.add(new ItemValue(itemStack));
+            });
+        }
+        
+        return values.stream();
     }
     
     @Override
