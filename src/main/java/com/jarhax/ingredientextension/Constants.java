@@ -1,6 +1,5 @@
 package com.jarhax.ingredientextension;
 
-import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,12 +23,16 @@ public class Constants {
     /**
      * A network marker that is used to denote that an extended ingredient that is managed by this API is being sent
      * across a network buffer.
+     * <p>
+     * This value is derived from the hashcode of the String {@literal ingredient-extension-api:extended}.
      */
-    public static final int NETWORK_MARKER_EXTENDED = new ResourceLocation(MODID, "extended").toString().hashCode();
+    public static final int NETWORK_MARKER_EXTENDED = 601817315;
 
     /**
      * A network marker that is used to denote that a non-managed ingredient is being sent across a network buffer. This
      * is used for stuff like vanilla ingredients or ingredients added by similar APIs.
+     * <p>
+     * This value is derived from the hashcode of the String {@literal ingredient-extension-api:vanilla}.
      */
-    public static final int NETWORK_MARKER_VANILLA = new ResourceLocation(MODID, "vanilla").toString().hashCode();
+    public static final int NETWORK_MARKER_VANILLA = -104387951;
 }
