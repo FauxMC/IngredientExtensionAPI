@@ -1,8 +1,11 @@
 package com.jarhax.ingredientextension.api.ingredient.serializer;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.crafting.Ingredient;
+
+import java.io.IOException;
 
 /**
  * Ingredient serializers allow for custom logic to be used when an ingredient is serialized from JSON or the network
@@ -32,7 +35,7 @@ public interface IIngredientSerializer<T extends Ingredient> {
      * @param json The JSON data to parse.
      * @return An ingredient that was read from the JSON data.
      */
-    T fromJson(JsonObject json);
+    T fromJson(JsonObject json) throws JsonParseException;
 
     /**
      * Writes additional properties managed by the serializer to a network buffer. All data written to the buffer must
@@ -40,8 +43,9 @@ public interface IIngredientSerializer<T extends Ingredient> {
      *
      * @param bytebuf    The buffer to write additional properties to.
      * @param ingredient The ingredient to write.
+     * @throws IOException An IOException may be raised if the ingredient can not be written to the network.
      */
-    void toNetwork(FriendlyByteBuf bytebuf, T ingredient);
+    void toNetwork(FriendlyByteBuf bytebuf, T ingredient) throws IOException;
 
     /**
      * Produces an ingredient by reading properties from a network buffer. It is critical that all data written to the
@@ -50,6 +54,7 @@ public interface IIngredientSerializer<T extends Ingredient> {
      *
      * @param bytebuf The buffer to read properties from.
      * @return The ingredient that was read.
+     * @throws IOException An IOException may be raised if the ingredient can not be read from the network.
      */
-    T fromNetwork(FriendlyByteBuf bytebuf);
+    T fromNetwork(FriendlyByteBuf bytebuf) throws IOException;
 }

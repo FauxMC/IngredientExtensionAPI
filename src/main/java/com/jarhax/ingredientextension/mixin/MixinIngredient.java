@@ -46,7 +46,19 @@ public class MixinIngredient {
             self.dissolve();
             buf.writeInt(Constants.NETWORK_MARKER_EXTENDED);
             buf.writeUtf(serializerId.toString());
-            ((IIngredientSerializer) serializer).toNetwork(buf, self);
+
+            try {
+
+                ((IIngredientSerializer) serializer).toNetwork(buf, self);
+            }
+
+            catch (Exception e) {
+
+                Constants.LOGGER.error("Failed to write Ingredient to network! ID={}, SerializerClass={} IngredientClass={}, Ingredient={}", serializerId, serializer.getClass().getName(), self.getClass().getName(), self);
+                Constants.LOGGER.catching(e);
+                throw new RuntimeException(e);
+            }
+
             ci.cancel();
         }
 
@@ -84,7 +96,17 @@ public class MixinIngredient {
 
             if (serializer != null) {
 
-                cir.setReturnValue(serializer.fromNetwork(friendlyByteBuf));
+                try {
+
+                    cir.setReturnValue(serializer.fromNetwork(friendlyByteBuf));
+                }
+
+                catch (Exception e) {
+
+                    Constants.LOGGER.error("Failed to write Ingredient to network! ID={}, SerializerClass={}", typeId, serializer.getClass().getName());
+                    Constants.LOGGER.catching(e);
+                    throw new RuntimeException(e);
+                }
             }
 
             else {
