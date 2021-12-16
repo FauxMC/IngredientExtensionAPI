@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
+    id 'net.darkhax.curseforgegradle' version '1.0.7'
 }
 
 sourceCompatibility = JavaVersion.VERSION_16
@@ -67,4 +68,16 @@ publishing {
             url "file://" + System.getenv("local_maven")
         }
     }
+}
+
+task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+
+    description = 'Publishes the build to CurseForge.'
+
+    apiToken = System.getenv("CURSEFORGE_API_TOKEN")
+
+    def mainFile = upload(557735, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
+    mainFile.changelog = 'Initial Release'
+    def sourcesFile = mainFile.withAdditionalFile(sourcesJar)
+    def javadocFile = mainFile.withAdditionalFile(javadocJar)
 }

@@ -5,6 +5,9 @@ pipeline {
     tools {
         jdk "jdk-17.0.1"
     }
+    environment {
+        CURSEFORGE_API_TOKEN     = credentials('jared-curseforge-token')
+    }
     stages {
         stage('Clean') {
             steps {
