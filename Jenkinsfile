@@ -27,6 +27,10 @@ pipeline {
                 echo 'Deploying to Maven'
                 sh './gradlew publish'
             }
+        steps {
+                echo 'Deploying to CurseForge'
+                sh './gradlew publishCurseForge'
+            }
         }
     }
     post {
