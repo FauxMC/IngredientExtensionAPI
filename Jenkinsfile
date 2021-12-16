@@ -24,13 +24,17 @@ pipeline {
         }
         stage('Publish') {
             stages {
-                steps {
-                    echo 'Deploying to Maven'
-                    sh './gradlew publish'
+                stage('Publish Maven') {
+                    steps {
+                        echo 'Deploying to Maven'
+                        sh './gradlew publish'
+                    }
                 }
-                steps {
-                    echo 'Deploying to CurseForge'
-                    sh './gradlew publishCurseForge'
+                stage('Publish CurseForge') {
+                    steps {
+                        echo 'Deploying to CurseForge'
+                        sh './gradlew publishCurseForge'
+                    }
                 }
             }
         }
