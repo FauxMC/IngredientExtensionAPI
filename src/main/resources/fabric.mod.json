@@ -12,7 +12,7 @@
     "homepage": "https://github.com/JarHax/",
     "sources": "https://github.com/JarHax/IngredientExtensionAPI"
   },
-  "license": "TODO",
+  "license": "LGPL v2.1",
   "environment": "*",
   "entrypoints": {
     "main": ["com.jarhax.ingredientextension.EntryPoint"]
