@@ -17,7 +17,23 @@ must be registered in the registry which can be done using `IngredientHelper.reg
 
 ### Maven Information
 
-// TODO add this Jared
+Every push to this repository is built and published to the [BlameJared](https://maven.blamejared.com) maven, to use these builds in your project, simply add the following code in your build.gradle
+
+```gradle
+repositories {
+    maven { url 'https://maven.blamejared.com' }
+}
+
+dependencies {
+    runtimeOnly fg.deobf("com.jarhax.ingredientextension:IngredientExtensionAPI-fabric-1.17.1:[VERSION]")
+}
+```
+
+Just replace `[VERSION]` with the latest released version, which is currently:
+
+[![Maven](https://img.shields.io/maven-metadata/v?color=C71A36&label=&metadataUrl=https%3A%2F%2Fmaven.blamejared.com%2Fcom%2Fjarhax%2Fingredientextension%2FIngredientExtensionAPI-fabric-1.17.1%2Fmaven-metadata.xml&style=flat-square)](https://maven.blamejared.com/com/jarhax/ingredientextension/)
+
+Simply remove the `v` and use that version, so `v1.0.0.0` becomes `1.0.0.0`
 
 ## User Information
 
