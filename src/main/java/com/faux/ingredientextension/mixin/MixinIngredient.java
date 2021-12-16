@@ -1,11 +1,11 @@
-package com.jarhax.ingredientextension.mixin;
+package com.faux.ingredientextension.mixin;
 
+import com.faux.ingredientextension.Constants;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.jarhax.ingredientextension.Constants;
-import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
-import com.jarhax.ingredientextension.api.ingredient.IngredientHelper;
-import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
+import com.faux.ingredientextension.api.ingredient.IngredientExtendable;
+import com.faux.ingredientextension.api.ingredient.IngredientHelper;
+import com.faux.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;

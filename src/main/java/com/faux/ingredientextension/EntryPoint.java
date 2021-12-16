@@ -1,4 +1,4 @@
-package com.jarhax.ingredientextension;
+package com.faux.ingredientextension;
 
 import net.fabricmc.api.ModInitializer;
 

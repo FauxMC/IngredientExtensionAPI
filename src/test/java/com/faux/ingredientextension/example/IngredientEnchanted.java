@@ -1,8 +1,8 @@
-package com.jarhax.ingredientextension.example;
+package com.faux.ingredientextension.example;
 
 import com.google.gson.JsonObject;
-import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
-import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
+import com.faux.ingredientextension.api.ingredient.IngredientExtendable;
+import com.faux.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

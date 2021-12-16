@@ -1,7 +1,7 @@
-package com.jarhax.ingredientextension.mixin;
+package com.faux.ingredientextension.mixin;
 
-import com.jarhax.ingredientextension.api.ingredient.IngredientExtendable;
-import com.jarhax.ingredientextension.api.ingredient.IngredientHelper;
+import com.faux.ingredientextension.api.ingredient.IngredientExtendable;
+import com.faux.ingredientextension.api.ingredient.IngredientHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;

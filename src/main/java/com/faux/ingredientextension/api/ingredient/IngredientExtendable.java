@@ -1,8 +1,8 @@
-package com.jarhax.ingredientextension.api.ingredient;
+package com.faux.ingredientextension.api.ingredient;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
+import com.faux.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;

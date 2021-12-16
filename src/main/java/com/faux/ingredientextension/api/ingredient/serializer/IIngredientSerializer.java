@@ -1,4 +1,4 @@
-package com.jarhax.ingredientextension.api.ingredient.serializer;
+package com.faux.ingredientextension.api.ingredient.serializer;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;

@@ -1,4 +1,4 @@
-package com.jarhax.ingredientextension;
+package com.faux.ingredientextension;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

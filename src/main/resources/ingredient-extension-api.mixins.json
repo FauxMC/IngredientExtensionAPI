@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.jarhax.ingredientextension.mixin",
+  "package": "com.faux.ingredientextension.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "MixinIngredient",

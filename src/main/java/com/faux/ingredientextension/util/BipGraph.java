@@ -1,4 +1,4 @@
-package com.jarhax.ingredientextension.util;
+package com.faux.ingredientextension.util;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;

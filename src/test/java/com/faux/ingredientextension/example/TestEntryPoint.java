@@ -1,8 +1,7 @@
-package com.jarhax.ingredientextension.example;
+package com.faux.ingredientextension.example;
 
-import com.jarhax.ingredientextension.Constants;
-import com.jarhax.ingredientextension.api.ingredient.IngredientHelper;
-import com.jarhax.ingredientextension.api.ingredient.serializer.IIngredientSerializer;
+import com.faux.ingredientextension.Constants;
+import com.faux.ingredientextension.api.ingredient.IngredientHelper;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
