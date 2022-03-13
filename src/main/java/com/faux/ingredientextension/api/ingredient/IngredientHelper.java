@@ -124,7 +124,7 @@ public class IngredientHelper {
      */
     private static <T> Registry<T> createRegistry(ResourceLocation id) {
 
-        final WritableRegistry<T> registry = new MappedRegistry<>(ResourceKey.createRegistryKey(id), Lifecycle.stable());
+        final WritableRegistry<T> registry = new MappedRegistry<>(ResourceKey.createRegistryKey(id), Lifecycle.stable(), null);
         return FabricRegistryBuilder.from(registry).buildAndRegister();
     }
 }
