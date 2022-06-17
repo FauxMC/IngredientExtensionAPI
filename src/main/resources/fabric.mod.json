@@ -15,9 +15,6 @@
   "license": "LGPL v2.1",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "com.faux.ingredientextension.EntryPoint"
-    ]
   },
   "mixins": [
     "ingredient-extension-api.mixins.json"
