@@ -1,11 +1,11 @@
 plugins {
-	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'fabric-loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
-    id 'net.darkhax.curseforgegradle' version '1.0.7'
+    id 'net.darkhax.curseforgegradle' version '1.0.11'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
 
@@ -43,7 +43,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 16
+	it.options.release = 17
 }
 
 java {
@@ -82,6 +82,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 
     def mainFile = upload(557735, file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
     mainFile.changelog = project.ext.mod_changelog
+    mainFile.changelogType = 'markdown'
     mainFile.releaseType = 'release'
     def sourcesFile = mainFile.withAdditionalFile(sourcesJar)
     def javadocFile = mainFile.withAdditionalFile(javadocJar)
