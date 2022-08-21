@@ -19,7 +19,9 @@ public class BipGraph {
         
         this.size = size;
         adj = new IntList[size + 1];
-        Arrays.fill(adj, new IntArrayList());
+        for (int i = 0; i < adj.length; i++) {
+            adj[i] = new IntArrayList();
+        }
     }
     
     public void addEdge(int u, int v) {
