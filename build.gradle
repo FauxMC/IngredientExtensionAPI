@@ -54,16 +54,8 @@ java {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId project.maven_group
             artifactId project.archivesBaseName
-            version project.version
-
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
+            from(components.java)
         }
     }
 
