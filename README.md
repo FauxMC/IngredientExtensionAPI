@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    runtimeOnly fg.deobf("com.faux.ingredientextension:IngredientExtensionAPI-fabric-1.17.1:[VERSION]")
+    modCompileOnly("com.faux.ingredientextension:IngredientExtensionAPI-fabric-1.17.1:[VERSION]")
 }
 ```
 
