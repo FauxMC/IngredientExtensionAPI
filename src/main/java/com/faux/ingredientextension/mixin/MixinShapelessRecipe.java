@@ -40,7 +40,7 @@ public abstract class MixinShapelessRecipe {
      * characteristics are also comparable to the vanilla implementation.
      */
     @Inject(method = "matches(Lnet/minecraft/world/inventory/CraftingContainer;Lnet/minecraft/world/level/Level;)Z", at = @At("HEAD"), cancellable = true)
-    public void matches(CraftingContainer craftingContainer, Level level, CallbackInfoReturnable<Boolean> cir) {
+    public void ingredientextensionapi_matches(CraftingContainer craftingContainer, Level level, CallbackInfoReturnable<Boolean> cir) {
 
         // Only use our custom logic if it is required.
         if (!IngredientHelper.requiresTesting(this.ingredients)) {
