@@ -33,7 +33,7 @@ public class MixinIngredient {
      * vanilla game.
      */
     @Inject(method = "toNetwork", at = @At("HEAD"), cancellable = true)
-    private void toNetwork(FriendlyByteBuf buf, CallbackInfo ci) {
+    private void ingredientextensionapi_toNetwork(FriendlyByteBuf buf, CallbackInfo ci) {
 
         final Ingredient self = (Ingredient) (Object) this;
 
@@ -84,7 +84,7 @@ public class MixinIngredient {
      * vanilla game.
      */
     @Inject(method = "fromNetwork", at = @At("HEAD"), cancellable = true)
-    private static void fromNetwork(FriendlyByteBuf friendlyByteBuf, CallbackInfoReturnable<Ingredient> cir) {
+    private static void ingredientextensionapi_fromNetwork(FriendlyByteBuf friendlyByteBuf, CallbackInfoReturnable<Ingredient> cir) {
 
         final int marker = friendlyByteBuf.readInt();
 
@@ -138,7 +138,7 @@ public class MixinIngredient {
      * true}.
      */
     @Inject(method = "fromJson(Lcom/google/gson/JsonElement;)Lnet/minecraft/world/item/crafting/Ingredient;", at = @At("HEAD"), cancellable = true)
-    private static void fromJson(JsonElement jsonElement, CallbackInfoReturnable<Ingredient> callback) {
+    private static void ingredientextensionapi_fromJson(JsonElement jsonElement, CallbackInfoReturnable<Ingredient> callback) {
 
         // Only process JSON objects with a type property.
         if (jsonElement instanceof JsonObject jsonObj && jsonObj.has("type")) {
